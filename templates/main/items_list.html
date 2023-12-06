@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Items</title>
+    <style>
+        body {
+            background-color:rgb(204, 221, 236);
+            font-family: 'League Spartan', sans-serif;
+            padding-top: 10em;
+        }
+        .container {
+            display: block;
+            max-width: 400px;
+            margin: auto;
+            padding: 2em;
+            border: 3px solid #a0a4a7;
+            background-color: #fff;
+            border-radius: 10px;
+            -webkit-box-shadow: 2px 2px 13px -4px rgba(0, 0, 0, 0.21);
+            box-shadow: 2px 2px 13px -4px rgba(0, 0, 0, 0.21);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>
+            List of items
+        </h1>
+        <ul>
+            {% for item in items %}
+            <li>
+                <a href="{% url 'item_details' item.pk %}">
+                    {{ item }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+
+</html>
