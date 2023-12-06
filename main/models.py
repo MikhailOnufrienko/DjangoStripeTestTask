@@ -12,7 +12,7 @@ class Item(models.Model):
     description = models.TextField(
         verbose_name='Описание'
     )
-    price = models.IntegerField(
+    price_as_int = models.IntegerField(
         verbose_name='Цена',
         help_text='For example, 15.90 should be 1590.'
     )
@@ -24,13 +24,23 @@ class Item(models.Model):
     def __str__(self):
         return self.name
 
-    def get_price(self):
+    def price(self):
         """
         Displays the price of the item in a normal way (as a decimal).
         """
-        return "{0:.2f}".format(self.price / 100)
+        return "{0:.2f}".format(self.price_as_int / 100)
 
 
-class StripeSession(models.Model):
+class Order(models.Model):
+    items = models.ManyToManyField(Item, through='OrderItem')
+    payment_intent_id = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def total_amount(self):
+        return sum(order_item.item.price for order_item in self.orderitem_set.all())
+
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
-    session_id = models.CharField(max_length=255)
+    quantity = models.PositiveIntegerField()
