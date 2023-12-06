@@ -29,18 +29,3 @@ class Item(models.Model):
         Displays the price of the item in a normal way (as a decimal).
         """
         return "{0:.2f}".format(self.price_as_int / 100)
-
-
-class Order(models.Model):
-    items = models.ManyToManyField(Item, through='OrderItem')
-    payment_intent_id = models.CharField(max_length=100)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def total_amount(self):
-        return sum(order_item.item.price for order_item in self.orderitem_set.all())
-
-
-class OrderItem(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    item = models.ForeignKey(Item, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField()

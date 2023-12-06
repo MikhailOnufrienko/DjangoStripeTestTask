@@ -9,3 +9,8 @@ class ItemAdmin(admin.ModelAdmin):
     list_display = ('name', 'description', 'price')
     empty_value_display = '-empty-'
     search_fields = ('name', )
+
+    def price(self, obj):
+        return obj.price()
+    
+    price.short_description = 'Цена'

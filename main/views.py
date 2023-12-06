@@ -15,21 +15,20 @@ stripe.api_key = os.getenv('SEC_KEY')
 
 class CreateCheckoutSessionView(View):
     """
-    Gets the ID of the Stripe session used for payment for the item chosen.
+    Get the ID of the Stripe session used for payment for the item chosen.
     Invokes the Stripe checkout session by sending data related to the item.
     """
     def post(self, request, *args, **kwargs):
         item_id = self.kwargs['pk']
         item = Item.objects.get(id=item_id)
         DOMAIN = r'http://127.0.0.1:8001'
-        # DOMAIN = r'http://cdcollectionsale.site'
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=['card'],
             line_items=[
                 {
                     'price_data': {
                         'currency': 'rub',
-                        'unit_amount': item.price,
+                        'unit_amount': item.price_as_int,
                         'product_data': {
                             'name': item.name
                         },
