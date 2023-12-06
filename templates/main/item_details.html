@@ -36,7 +36,7 @@
             {{ item.name }}
         </h1>
         <p>
-            Description
+            <b>Description</b>
         </p>
         <p>
             {{ item.description }}
@@ -57,7 +57,6 @@
 <script>
     const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
-    // Creating an instance of the Stripe object with the publishable API key.
     var stripe = Stripe("{{ STRIPE_PUBLIC_KEY }}");
     var buyButton = document.getElementById("buy-button");
     buyButton.addEventListener('click', function () {

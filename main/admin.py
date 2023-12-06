@@ -1,5 +1,11 @@
 from django.contrib import admin
+from django.contrib.admin.decorators import register
 
 from .models import Item
 
-admin.site.register(Item)
+
+@register(Item)
+class ItemAdmin(admin.ModelAdmin):
+    list_display = ('name', 'description', 'get_price')
+    empty_value_display = '-empty-'
+    search_fields = ('name', )

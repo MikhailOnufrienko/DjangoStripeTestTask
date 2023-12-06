@@ -29,3 +29,8 @@ class Item(models.Model):
         Displays the price of the item in a normal way (as a decimal).
         """
         return "{0:.2f}".format(self.price / 100)
+
+
+class StripeSession(models.Model):
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    session_id = models.CharField(max_length=255)
